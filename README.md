@@ -1,59 +1,36 @@
-# Introduction to GitHub
+Daily AI Trading Assistant – PineScript Strategy
 
-<!-- ![](https://github.com/eokaro/daily-Pine-trading-Indicator/actions/workflows/0-start-exercise.yml/badge.svg) -->
-![](https://github.com/eokaro/daily-Pine-trading-Indicator/actions/workflows/1-create-a-branch.yml/badge.svg)
-![](https://github.com/eokaro/daily-Pine-trading-Indicator/actions/workflows/2-commit-a-file.yml/badge.svg)
-![](https://github.com/eokaro/daily-Pine-trading-Indicator/actions/workflows/3-open-a-pull-request.yml/badge.svg)
-![](https://github.com/eokaro/daily-Pine-trading-Indicator/actions/workflows/4-merge-your-pull-request.yml/badge.svg)
+This project is a cost-effective daily AI trading assistant built entirely in TradingView’s Pine Script. It leverages a combination of technical indicators—Exponential Moving Averages (EMAs), the Relative Strength Index (RSI), volume analysis, and a custom 3-minute high filter—to generate buy and sell signals. The goal is to provide an easy-to-deploy, no-cost strategy for traders who want to take advantage of algorithmic trading signals without investing in expensive data feeds or cloud infrastructure.
 
-_Get started using GitHub in less than an hour._
+Key Features:
 
-## Welcome
+Trend Detection:
+Uses the 9 EMA and 20 EMA crossover to capture trend shifts. A bullish crossover signals a potential entry, while a bearish crossover indicates an exit or short signal.
 
-People use GitHub to build some of the most advanced technologies in the world. Whether you’re visualizing data or building a new game, there’s a whole community and set of tools on GitHub that can help you do it even better. GitHub Skills’ “Introduction to GitHub” exercise guides you through everything you need to start contributing in less than an hour.
+Momentum Confirmation:
+Incorporates a 14-period RSI to ensure trades are taken with sufficient momentum. Buy signals require RSI values above 50, and sell signals occur when RSI drops below 50.
 
-- **Who is this for**: New developers, new GitHub users, and students.
-- **What you'll learn**: We'll introduce repositories, branches, commits, and pull requests.
-- **What you'll build**: We'll make a short Markdown file you can use as your [profile README](https://docs.github.com/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme).
-- **Prerequisites**: None. This exercise is a great introduction for your first day on GitHub.
-- **How long**: This exercise takes less than one hour to complete.
+Volume Analysis:
+Validates signals by checking that the current volume exceeds the 20-bar moving average by a set threshold, ensuring that signals are supported by market strength.
 
-In this exercise, you will:
+3-Minute High Filter:
+Adds an extra layer of confirmation by requiring that the current bar’s high equals the highest high of the last three bars. This filter helps confirm that the price is breaking out with strength.
 
-1. Create a branch
-2. Commit a file
-3. Open a pull request
-4. Merge your pull request
+Alert Integration:
+Built-in TradingView alert conditions allow you to receive real-time notifications. You can also integrate these alerts with webhook services for automated trading actions if desired.
 
-### How to start this exercise
+Usage Instructions:
 
-1. Right-click **Copy Exercise** and open the link in a new tab.
+Copy & Paste:
+Open TradingView’s Pine Script Editor, paste the provided code, and add it to your chart.
 
-   <a id="copy-exercise">
-      <img src="https://img.shields.io/badge/📠_Copy_Exercise-AAA" height="25pt"/>
-   </a>
+Customize Alerts:
+Set up alerts in TradingView using the defined alert conditions for buy and sell signals. You can receive these notifications via email, SMS, or webhook.
 
-2. In the new tab, most of the prompts will automatically fill in for you.
-   - For owner, choose your personal account or an organization to host the repository.
-   - We recommend creating a public repository, as private repositories will [use Actions minutes](https://docs.github.chttps://github.com/eokaro/daily-Pine-trading-Indicator/billing/managing-billing-for-github-actions/about-billing-for-github-actions).
-   - Scroll down and click the **Create repository** button at the bottom of the form.
+Deploy & Monitor:
+Once the strategy is active on your chart, monitor the signals and adjust parameters as needed based on your trading style and market conditions.
 
-3. After your new repository is created, wait about 20 seconds for the exercise to be prepared and buttons updated. You will continue working from your copy of the exercise.
-   - The **Copy Exercise** button will deactivate, changing to gray.
-   - The **Start Exercise** button will activate, changing to green.
-   - You will likely need to refresh the page.
+Disclaimer:
 
-4. Click **Start Exercise**. Follow the step-by-step instructions and feedback will be provided as you progress.
+This strategy is intended for educational and research purposes only. Trading involves risks, and past performance does not guarantee future results. Please test extensively using paper trading and historical data before committing real funds.
 
-   <a id="start-exercise" href="https://github.com/eokaro/daily-Pine-trading-Indicator/issues/1">
-      <img src="https://img.shields.io/badge/🚀_Start_Exercise-008000" height="25pt"/>
-   </a>
-
-> [!IMPORTANT]
-> The **Start Exercise** button will activate after copying the repository. You will probably need to refresh the page.
-
----
-
-Get help: [Post in our discussion board](https://github.com/orgs/skills/discussions/categories/introduction-to-github) &bull; [Review the GitHub status page](https://www.githubstatus.com/)
-
-&copy; 2024 GitHub &bull; [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md) &bull; [MIT License](https://gh.io/mit)
