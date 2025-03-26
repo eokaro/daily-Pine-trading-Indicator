@@ -1,0 +1,48 @@
+//@version=5
+strategy("RSI + EMA + Liquidity Sweep Strategy", overlay=true, initial_capital=10000, default_qty_type=strategy.percent_of_equity, default_qty_value=100)
+
+// INPUT PARAMETERS
+rsiPeriod = input.int(title="RSI Period", defval=14, minval=1)
+overboughtLevel = input.int(title="Overbought Level", defval=70, minval=1, maxval=100)
+oversoldLevel = input.int(title="Oversold Level", defval=30, minval=1, maxval=100)
+emaPeriod = input.int(title="EMA Period", defval=50, minval=1)
+
+// LIQUIDITY SWEEP PARAMETERS
+liquidityLookback = input.int(title="Liquidity Lookback", defval=10, minval=1)
+sweepFactor = input.float(title="Sweep Factor (percentage of bar range)", defval=0.7, minval=0.0, step=0.1)
+
+// RSI Calculation
+rsiValue = ta.rsi(close, rsiPeriod)
+
+// EMA Calculation
+emaValue = ta.ema(close, emaPeriod)
+
+// Plotting the EMA on the chart
+plot(emaValue, title="EMA", color=color.orange, linewidth=2)
+
+// LIQUIDITY SWEEP CALCULATIONS
+lowestLowLB = ta.lowest(low, liquidityLookback)
+highestHighLB = ta.highest(high, liquidityLookback)
+barRange = high - low
+recoveryRatio = barRange != 0 ? (close - low) / barRange : 0
+reversalRatio = barRange != 0 ? (high - close) / barRange : 0
+
+// Bullish liquidity sweep: when the bar reaches a new low and recovers significantly
+bullSweep = (low <= lowestLowLB) and (recoveryRatio > sweepFactor)
+// Bearish liquidity sweep: when the bar reaches a new high and then reverses sharply
+bearSweep = (high >= highestHighLB) and (reversalRatio > sweepFactor)
+
+// Visualize liquidity sweep signals on the chart
+plotshape(bullSweep, title="Bullish Liquidity Sweep", location=location.belowbar, color=color.green, style=shape.labelup, text="Bull LS")
+plotshape(bearSweep, title="Bearish Liquidity Sweep", location=location.abovebar, color=color.red, style=shape.labeldown, text="Bear LS")
+
+// TRADING LOGIC
+// Long Entry: Use RSI oversold and EMA filter OR a bullish liquidity sweep, and only if no position is open
+enterLong = ((rsiValue < oversoldLevel) and (close > emaValue) and (strategy.position_size == 0)) or bullSweep
+if (enterLong)
+    strategy.entry("Long", strategy.long)
+
+// Long Exit: Exit when RSI is overbought OR a bearish liquidity sweep is detected (if in a long position)
+exitLong = ((rsiValue > overboughtLevel) and (strategy.position_size > 0)) or (bearSweep and (strategy.position_size > 0))
+if (exitLong)
+    strategy.close("Long")
