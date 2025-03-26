@@ -1,36 +1,46 @@
-Daily AI Trading Assistant – PineScript Strategy
+# RSI + EMA + Liquidity Sweep Strategy
 
-This project is a cost-effective daily AI trading assistant built entirely in TradingView’s Pine Script. It leverages a combination of technical indicators—Exponential Moving Averages (EMAs), the Relative Strength Index (RSI), volume analysis, and a custom 3-minute high filter—to generate buy and sell signals. The goal is to provide an easy-to-deploy, no-cost strategy for traders who want to take advantage of algorithmic trading signals without investing in expensive data feeds or cloud infrastructure.
+This is a TradingView Pine Script strategy combining **RSI**, **EMA**, and **Liquidity Sweep** indicators to generate buy and sell signals for traders. The strategy utilizes the **RSI** for momentum analysis, **EMA** for trend confirmation, and **Liquidity Sweep** to capture significant market reversals.
 
-Key Features:
+## Features
+- **RSI (Relative Strength Index)** to identify overbought and oversold conditions.
+- **EMA (Exponential Moving Average)** to determine trend direction.
+- **Liquidity Sweep** to identify sharp reversals, especially when liquidity is swept at critical price levels.
+- **Backtesting Capability**: Use the initial capital of $10,000 to test performance over historical data.
+- **Customizable Parameters**: Easy-to-adjust inputs for RSI period, EMA period, and liquidity sweep factors.
 
-Trend Detection:
-Uses the 9 EMA and 20 EMA crossover to capture trend shifts. A bullish crossover signals a potential entry, while a bearish crossover indicates an exit or short signal.
+## Usage
 
-Momentum Confirmation:
-Incorporates a 14-period RSI to ensure trades are taken with sufficient momentum. Buy signals require RSI values above 50, and sell signals occur when RSI drops below 50.
+### 1. Setup on TradingView:
+1. Open **TradingView** and go to the **Pine Script Editor**.
+2. Paste the provided Pine Script code into the editor.
+3. Add the script to your chart.
+4. Modify parameters as needed (RSI period, EMA period, etc.).
+5. Set up alerts for automated signal notifications.
 
-Volume Analysis:
-Validates signals by checking that the current volume exceeds the 20-bar moving average by a set threshold, ensuring that signals are supported by market strength.
+### 2. Strategy Parameters:
+- **RSI Period**: Sets the period for the RSI indicator (default: 14).
+- **Overbought Level**: The RSI value that triggers a sell signal (default: 70).
+- **Oversold Level**: The RSI value that triggers a buy signal (default: 30).
+- **EMA Period**: Period for calculating the EMA (default: 50).
+- **Liquidity Lookback**: Defines how many bars to look back for the liquidity sweep logic (default: 10).
+- **Sweep Factor**: The threshold percentage of the bar range used for liquidity sweep conditions (default: 0.7).
 
-3-Minute High Filter:
-Adds an extra layer of confirmation by requiring that the current bar’s high equals the highest high of the last three bars. This filter helps confirm that the price is breaking out with strength.
+### Example:
 
-Alert Integration:
-Built-in TradingView alert conditions allow you to receive real-time notifications. You can also integrate these alerts with webhook services for automated trading actions if desired.
+- **Long Position**: Triggered when the RSI is below the oversold level, the price is above the EMA, or a bullish liquidity sweep is detected.
+- **Exit Position**: Triggered when RSI is above the overbought level, or a bearish liquidity sweep is detected.
 
-Usage Instructions:
+## Backtesting Results
 
-Copy & Paste:
-Open TradingView’s Pine Script Editor, paste the provided code, and add it to your chart.
+Backtest the strategy using historical data on TradingView to analyze performance and tweak the parameters for your trading needs. See the **backtest_results/** folder for a summary of backtest results.
 
-Customize Alerts:
-Set up alerts in TradingView using the defined alert conditions for buy and sell signals. You can receive these notifications via email, SMS, or webhook.
+## License
 
-Deploy & Monitor:
-Once the strategy is active on your chart, monitor the signals and adjust parameters as needed based on your trading style and market conditions.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Disclaimer:
+## Contributing
 
-This strategy is intended for educational and research purposes only. Trading involves risks, and past performance does not guarantee future results. Please test extensively using paper trading and historical data before committing real funds.
+Feel free to fork the project, suggest improvements, or submit pull requests. See the [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
 
